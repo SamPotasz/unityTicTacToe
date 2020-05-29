@@ -22,13 +22,15 @@ public class EyeController : MonoBehaviour
     [SerializeField]
     private Sprite closedSprite;
 
+    private float pupilStartZ;
+
     // how far to move the pupil within the eye
     static float PUPIL_RADIUS = 0.1f;
     private EYE_STATE state = EYE_STATE.LOOKING;
     // Start is called before the first frame update
     void Start()
     {
-        
+        pupilStartZ = pupil.transform.localPosition.z;
     }
 
     void Update()
@@ -45,8 +47,9 @@ public class EyeController : MonoBehaviour
             target = target * PUPIL_RADIUS;
 
             pupil.transform.localPosition = Vector3.Lerp(
-                pupil.transform.localPosition, target, 5 * Time.deltaTime
-            );
+                pupil.transform.localPosition, 
+                new Vector3(target.x, target.y, pupilStartZ),
+                5 * Time.deltaTime );
         }
     }
 
