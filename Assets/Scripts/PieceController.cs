@@ -18,6 +18,8 @@ public class PieceController : MonoBehaviour
         get { return _isInBoard; }
     }
 
+    private Vector3 startPos;
+
     private static float SPEED = 5.0f;
     private static float ARRIVAL_EPS = 0.01f;
 
@@ -33,7 +35,7 @@ public class PieceController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        startPos = transform.position;
     }
 
     // Update is called once per frame
@@ -49,5 +51,13 @@ public class PieceController : MonoBehaviour
             }
 
         }
+    }
+
+    /// summary
+    // on game restart
+    public void Reset() {
+        isMoving = false;
+        _isInBoard = false;
+        transform.position = startPos;
     }
 }

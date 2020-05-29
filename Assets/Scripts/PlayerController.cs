@@ -32,4 +32,11 @@ public class PlayerController : MonoBehaviour
             toMove.MoveToSpace( x, y );
         }
     }
+
+    public void RestartGame() {
+      int numPieces = pieces.Length;
+      for(var i = 0; i < numPieces; i++) {
+        pieces[i].Reset();
+      }
+    }
 }

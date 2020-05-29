@@ -25,6 +25,9 @@ public class RefereeController : MonoBehaviour
     [SerializeField]
     PlayerController player2;
 
+    [SerializeField]
+    GameObject restartButton;
+
     /**
      *  properties to get controllers based on whose turn it is
      */
@@ -44,6 +47,7 @@ public class RefereeController : MonoBehaviour
     void Start()
     {
         updateHeaderText();
+        restartButton.SetActive( false );
     }
 
     public void onSpaceClicked( int spaceIndex, float x, float y ){
@@ -53,7 +57,6 @@ public class RefereeController : MonoBehaviour
             return;
         }
 
-        numMoves++;
         Vector2Int rowCol = getRowColFromIndex(spaceIndex);
         int row = rowCol.x;
         int col = rowCol.y;
@@ -62,6 +65,7 @@ public class RefereeController : MonoBehaviour
           return;
         }
         
+        numMoves++;
 
         currPlayerController.MovePieceTo( x, y );
 
@@ -73,20 +77,35 @@ public class RefereeController : MonoBehaviour
         // Debug.Log("Winner? " + gameIsOver);
 
         //if nine moves made, draw.
-        if( numMoves >= 9) {
+        if( !gameIsOver && numMoves >= 9) {
             // Debug.Log("It's a tie!");
             gameIsOver = true;
             isTied = true;
         }
 
         //switch currPlayer
-        if(!gameIsOver)
-        {
+        if( gameIsOver ) {
+          restartButton.SetActive( true );
+        }
+        else {
           switchPlayer();
         }
 
-        printBoardData();
+        // printBoardData();
         updateHeaderText();
+    }
+
+    public void RestartGame() {
+      boardData = new int [,] {{0, 0, 0},{0,0,0},{0,0,0}};
+      player1.RestartGame();
+      player2.RestartGame();
+      numMoves = 0;
+      isTied = false;
+      gameIsOver = false;
+      currPlayer = 1;
+
+      restartButton.SetActive(false);
+      updateHeaderText();
     }
 
     void updateHeaderText() {
@@ -196,10 +215,14 @@ public class RefereeController : MonoBehaviour
                 else {
                     toReturn += "Player " + currPlayer + " wins!";
                 }
-                toReturn += "\nPlay again?";
             }
             else {
-                toReturn += "It's Player " + currPlayer + "\'s turn.";
+                if( numMoves == 0 ) {
+                    toReturn += "Player " + currPlayer + " goes first.";
+                }
+                else {
+                    toReturn += "Now it's Player " + currPlayer + "\'s turn.";
+                }
             }
             return toReturn;
         }
