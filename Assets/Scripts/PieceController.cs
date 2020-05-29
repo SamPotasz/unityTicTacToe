@@ -13,6 +13,13 @@ public class PieceController : MonoBehaviour
     // [SerializeField]
     // private BoxCollider2D boxCollider;
 
+    [SerializeField]
+    private EyeController[] eyes;
+    private int numEyes;
+
+    [SerializeField]
+    private PieceParticleController particles;
+
     private bool _isInBoard = false;
     public bool isInBoard {
         get { return _isInBoard; }
@@ -24,7 +31,6 @@ public class PieceController : MonoBehaviour
     private static float ARRIVAL_EPS = 0.01f;
 
     public void MoveToSpace( float x, float y ) {
-        Debug.Log("starting to move " + gameObject.name);
         _isInBoard = true;
         isMoving = true;
         // rigidBody.bodyType = RigidbodyType2D.Kinematic;
@@ -36,6 +42,8 @@ public class PieceController : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
+        numEyes = eyes.Length;
+        particles.Stop();
     }
 
     // Update is called once per frame
@@ -49,7 +57,27 @@ public class PieceController : MonoBehaviour
             if( Vector3.Distance( transform.position, movingTo ) <= ARRIVAL_EPS ){
                 isMoving = false;
             }
+        }
+    }
 
+    public void OpenEyes() {
+        for(var i = 0; i < numEyes; i++) {
+            eyes[i].Open();
+        }
+    }
+
+    public void CloseEyes() {
+        for(var i = 0; i < numEyes; i++) {
+            eyes[i].Close();
+        }
+    }
+
+    public void OnGameOver( bool didWin ) {
+        if( didWin ) {
+            particles.PlayWin();
+        }
+        else {
+            particles.PlayLose();
         }
     }
 
@@ -59,5 +87,7 @@ public class PieceController : MonoBehaviour
         isMoving = false;
         _isInBoard = false;
         transform.position = startPos;
+        particles.Stop();
+        // rigidBody.bodyType = RigidbodyType2D.Dynamic;
     }
 }

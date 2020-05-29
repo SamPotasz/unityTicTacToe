@@ -48,6 +48,7 @@ public class RefereeController : MonoBehaviour
     {
         updateHeaderText();
         restartButton.SetActive( false );
+        SetPlayerEyes();
     }
 
     public void onSpaceClicked( int spaceIndex, float x, float y ){
@@ -86,6 +87,10 @@ public class RefereeController : MonoBehaviour
         //switch currPlayer
         if( gameIsOver ) {
           restartButton.SetActive( true );
+          if( !isTied ) {
+            otherPlayerController.OnGameOver( false );
+            currPlayerController.OnGameOver( true );
+          }
         }
         else {
           switchPlayer();
@@ -105,6 +110,7 @@ public class RefereeController : MonoBehaviour
       currPlayer = 1;
 
       restartButton.SetActive(false);
+      SetPlayerEyes();
       updateHeaderText();
     }
 
@@ -180,8 +186,14 @@ public class RefereeController : MonoBehaviour
       else {
           currPlayer = 1;
       }
+      SetPlayerEyes();
     }
     
+    // open and close the eyes of the pieces to show whose turn it is
+    void SetPlayerEyes() {
+      currPlayerController.StartTurn();
+      otherPlayerController.FinishTurn();
+    }
 
     Vector2Int getRowColFromIndex( int spaceIndex ){
         int row = (int) Mathf.Floor( spaceIndex / 3 );
