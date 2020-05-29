@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838080152118485606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2693483116640428927}
@@ -9761,11 +9761,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2113619938708926899}
     m_Modifications:
-    - target: {fileID: 1329316920870693743, guid: f81b5ae68ed20443f867286a1abe1eb7,
-        type: 3}
-      propertyPath: m_Name
-      value: Eye (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1329316920870693741, guid: f81b5ae68ed20443f867286a1abe1eb7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9779,7 +9774,7 @@ PrefabInstance:
     - target: {fileID: 1329316920870693741, guid: f81b5ae68ed20443f867286a1abe1eb7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22.105099
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1329316920870693741, guid: f81b5ae68ed20443f867286a1abe1eb7,
         type: 3}
@@ -9830,6 +9825,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.8000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329316920870693743, guid: f81b5ae68ed20443f867286a1abe1eb7,
+        type: 3}
+      propertyPath: m_Name
+      value: Eye (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f81b5ae68ed20443f867286a1abe1eb7, type: 3}
@@ -9858,11 +9858,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2113619938708926899}
     m_Modifications:
-    - target: {fileID: 1329316920870693743, guid: f81b5ae68ed20443f867286a1abe1eb7,
-        type: 3}
-      propertyPath: m_Name
-      value: Eye
-      objectReference: {fileID: 0}
     - target: {fileID: 1329316920870693741, guid: f81b5ae68ed20443f867286a1abe1eb7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9876,7 +9871,7 @@ PrefabInstance:
     - target: {fileID: 1329316920870693741, guid: f81b5ae68ed20443f867286a1abe1eb7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22.105099
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1329316920870693741, guid: f81b5ae68ed20443f867286a1abe1eb7,
         type: 3}
@@ -9927,6 +9922,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.8000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329316920870693743, guid: f81b5ae68ed20443f867286a1abe1eb7,
+        type: 3}
+      propertyPath: m_Name
+      value: Eye
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f81b5ae68ed20443f867286a1abe1eb7, type: 3}
