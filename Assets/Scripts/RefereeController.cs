@@ -8,6 +8,8 @@ public class RefereeController : MonoBehaviour
 
     private int[,] boardData = new int [,] {{0, 0, 0},{0,0,0},{0,0,0}};
 
+    //board controller to get the actual x/y position?
+
     private int currPlayer = 1;
     private int numMoves;
 
@@ -17,39 +19,70 @@ public class RefereeController : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI headerText;
 
+    [SerializeField]
+    PlayerController player1;
+
+    [SerializeField]
+    PlayerController player2;
+
+    /**
+     *  properties to get controllers based on whose turn it is
+     */
+    public PlayerController currPlayerController {
+        get {
+            return currPlayer == 1 ? player1 : player2;
+        }
+    }
+    public PlayerController otherPlayerController {
+        get {
+            return currPlayer == 1 ? player2 : player1;
+
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         updateHeaderText();
     }
 
-    public void onSpaceClicked( int spaceIndex ){
-        if(gameIsOver){
+    public void onSpaceClicked( int spaceIndex, float x, float y ){
+        Debug.Log("Detected click on space " + spaceIndex);
+       
+        if(gameIsOver) {
             return;
         }
 
         numMoves++;
         Vector2Int rowCol = getRowColFromIndex(spaceIndex);
+        int row = rowCol.x;
+        int col = rowCol.y;
+        //don't allow moves on non-empty spaces
+        if(boardData[row, col] > 0) {
+          return;
+        }
+        
+
+        currPlayerController.MovePieceTo( x, y );
+
         //update the board
-        boardData[rowCol.x, rowCol.y] = currPlayer;
+        boardData[row, col] = currPlayer;
 
         //check for wins
         gameIsOver = checkForWin( rowCol );
-        Debug.Log("Winner? " + gameIsOver);
+        // Debug.Log("Winner? " + gameIsOver);
 
         //if nine moves made, draw.
         if( numMoves >= 9) {
-            Debug.Log("It's a tie!");
+            // Debug.Log("It's a tie!");
             gameIsOver = true;
             isTied = true;
         }
 
         //switch currPlayer
-        if( currPlayer == 1) {
-            currPlayer = 2;
-        }
-        else {
-            currPlayer = 1;
+        if(!gameIsOver)
+        {
+          switchPlayer();
         }
 
         printBoardData();
@@ -121,6 +154,15 @@ public class RefereeController : MonoBehaviour
         return false;
     }
 
+    void switchPlayer() {
+      if( currPlayer == 1) {
+            currPlayer = 2;
+      }
+      else {
+          currPlayer = 1;
+      }
+    }
+    
 
     Vector2Int getRowColFromIndex( int spaceIndex ){
         int row = (int) Mathf.Floor( spaceIndex / 3 );
@@ -134,7 +176,7 @@ public class RefereeController : MonoBehaviour
             for(var j = 0; j < 3; j++) {
                 toPrint += boardData[i, j];
             }
-            toPrint += "\n";
+            toPrint += "/";
         }
         Debug.Log(toPrint);
     }
@@ -149,7 +191,7 @@ public class RefereeController : MonoBehaviour
             if( gameIsOver ) {
                 toReturn = "Game over! ";
                 if( isTied ) {
-                    toReturn += "\It's a tie!";
+                    toReturn += "It\'s a tie!";
                 }
                 else {
                     toReturn += "Player " + currPlayer + " wins!";
@@ -157,7 +199,7 @@ public class RefereeController : MonoBehaviour
                 toReturn += "\nPlay again?";
             }
             else {
-                toReturn = "It's Player " + currPlayer + "\'s turn.";
+                toReturn += "It's Player " + currPlayer + "\'s turn.";
             }
             return toReturn;
         }

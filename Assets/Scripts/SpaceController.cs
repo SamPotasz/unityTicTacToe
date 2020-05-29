@@ -7,15 +7,21 @@ public class SpaceController : MonoBehaviour
     [SerializeField]
     private int spaceIndex;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField]
+    private RefereeController referee;
+
+    private float spaceX;
+    private float spaceY;
+
+    void Start() {
+      // Sprite sprite = GetComponent<Sprite>();
+      // spaceX = sprite.transform.position.x;
+      // spaceY = sprite.transform.position.y;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void HandleClick() {
+      referee.onSpaceClicked( spaceIndex, 
+        transform.position.x, transform.position.y );
     }
+
 }
