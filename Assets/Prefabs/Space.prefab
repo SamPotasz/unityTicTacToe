@@ -46,8 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d78294c2921f46fdb379149597705da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceIndex: 0
+  _spaceIndex: 0
   referee: {fileID: 0}
+  onFullMouseOverClip: {fileID: 8300000, guid: c6a47ca48040b4b7a85e2eea5c86573f, type: 3}
+  onEmptyMouseOverClip: {fileID: 8300000, guid: 4c31ec1d97cc34574addeda06419f2bb,
+    type: 3}
+  audioSource: {fileID: 0}
 --- !u!114 &4132601039264516902
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,14 +10,13 @@ public class PlayerController : MonoBehaviour
 
     private PieceController activePiece;
     // Start is called before the first frame update
+
     void Start()
     {
         numPieces = pieces.Length;
-        Debug.Log("Num pieces: " + numPieces);
     }
 
     public void StartTurn() {
-      Debug.Log("Starting turn!");
       for(var i = 0; i < numPieces; i++) {
         pieces[i].OpenEyes();
       }
@@ -44,7 +43,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         if( toMove ) {
-            Debug.Log("Moving piece to " + x + " " + y);
             toMove.MoveToSpace( x, y );
         }
     }

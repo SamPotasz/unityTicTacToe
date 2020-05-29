@@ -28,6 +28,21 @@ public class RefereeController : MonoBehaviour
     [SerializeField]
     GameObject restartButton;
 
+    [SerializeField]
+    private AudioClip moveClip; //to play on sending piece to space
+    
+    [SerializeField]
+    private AudioClip winClip; //to play on someone winning
+    
+    [SerializeField]
+    private AudioClip tieClip; //to play on cats' game
+    
+    [SerializeField]
+    private AudioClip restartClip; //to play on starting a new game
+
+    [SerializeField]
+    private AudioSource audioSource;
+
     /**
      *  properties to get controllers based on whose turn it is
      */
@@ -51,8 +66,11 @@ public class RefereeController : MonoBehaviour
         SetPlayerEyes();
     }
 
-    public void onSpaceClicked( int spaceIndex, float x, float y ){
-        Debug.Log("Detected click on space " + spaceIndex);
+    // public void onSpaceClicked( int spaceIndex, float x, float y ){
+    public void onSpaceClicked( SpaceController space ) {
+        int spaceIndex = space.spaceIndex;
+        float x = space.gameObject.transform.position.x;
+        float y = space.gameObject.transform.position.y;
        
         if(gameIsOver) {
             return;
@@ -67,8 +85,10 @@ public class RefereeController : MonoBehaviour
         }
         
         numMoves++;
+        space.SetIsFull(true);
 
         currPlayerController.MovePieceTo( x, y );
+        audioSource.PlayOneShot( moveClip, 1.0f );
 
         //update the board
         boardData[row, col] = currPlayer;
@@ -82,12 +102,16 @@ public class RefereeController : MonoBehaviour
             // Debug.Log("It's a tie!");
             gameIsOver = true;
             isTied = true;
+            audioSource.PlayOneShot( tieClip, 1.0f );
+
         }
 
         //switch currPlayer
         if( gameIsOver ) {
           restartButton.SetActive( true );
           if( !isTied ) {
+            audioSource.PlayOneShot( winClip, 1.0f );
+
             otherPlayerController.OnGameOver( false );
             currPlayerController.OnGameOver( true );
           }
@@ -112,6 +136,8 @@ public class RefereeController : MonoBehaviour
       restartButton.SetActive(false);
       SetPlayerEyes();
       updateHeaderText();
+      
+      audioSource.PlayOneShot( restartClip, 1.0f );
     }
 
     void updateHeaderText() {
